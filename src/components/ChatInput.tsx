@@ -1,6 +1,6 @@
 "use client"
 
-import { useChat } from "@ai-sdk/react";
+import { type useChat } from "@ai-sdk/react";
 import {Textarea} from "@heroui/input";
 import { Button } from "@heroui/react";
 import { Send } from "lucide-react";

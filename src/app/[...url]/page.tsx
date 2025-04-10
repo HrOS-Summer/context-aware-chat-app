@@ -11,7 +11,7 @@ interface PageProps {
 }
 
 function reconstructUrl({ url }: { url:string[] }) {
-    const decodedComponents = url.map((component) => decodeURIComponent(component))
+    const decodedComponents = url.map((component) => decodeURIComponent(component)) //in-built JS method to decode the encoded url
 
     return decodedComponents.join("/")
 }
@@ -28,12 +28,15 @@ const Page = async({ params }: PageProps) => {
     const initialMessages = await ragChat.history.getMessages({ amount: 10, sessionId})
 
 
-    if(!isAlreadyIndexed) {
+    if(!isAlreadyIndexed) { //go to the reconstructedUrl and load the data to ragChat
         await ragChat.context.add({
             type: "html",
             source: reconstructedUrl,
-            config: { chunkOverlap: 200, chunkSize: 1000 }
+            config: { chunkOverlap: 50, chunkSize: 200 }
         })
+        //chunkSize: This defines how big each text chunk will be
+        //chunkOverlap: chunkOverlap: 50 → each new chunk will overlap by 50 characters with the previous one.
+        //Maintaining context continuity between chunks
 
         await redis.sadd("indexed-url", reconstructedUrl)
     }
