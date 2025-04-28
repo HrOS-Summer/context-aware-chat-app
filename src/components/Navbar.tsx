@@ -3,7 +3,7 @@
 export const Navbar = () => {
     return (
         <nav>
-            Harry's AI
+            H
         </nav>
     )
 }
